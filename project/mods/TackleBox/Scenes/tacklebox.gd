@@ -3,6 +3,11 @@ extends Node
 onready var main_menu = get_parent()
 onready var menu_list = main_menu.get_node("VBoxContainer")
 
+var loaded_mods = [
+	"TackleBox\nYou're looking at me!",
+	"Test\nA test mod."
+]
+
 func _ready():
 	menu_list.margin_top = -50
 
@@ -46,6 +51,14 @@ func _ready():
 	
 	var mod_menu = get_node("mod_menu")
 	mod_menu.visible = false
+	
+	var mod_list = mod_menu.get_node("Panel/Panel2/ScrollContainer/VBoxContainer")
+	
+	for mod in loaded_mods:
+		var mod_panel = preload("res://mods/TackleBox/Scenes/ModPanel/modpanel.tscn").instance()
+		mod_panel.get_node("Panel/HBoxContainer/Label").bbcode_text = mod
+		mod_list.add_child(mod_panel)
+	
 	call_deferred("remove_child", mod_menu)
 	main_menu.call_deferred("add_child", mod_menu)
 
