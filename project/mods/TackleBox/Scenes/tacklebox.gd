@@ -33,6 +33,8 @@ func _ready():
 	button_font.size = 34
 	mod_menu_button.add_font_override("font", button_font)
 	
+	mod_menu_button.connect("pressed", self, "_open_mod_menu")
+	
 	var mod_menu_tooltip = TooltipNode.new()
 	mod_menu_button.add_child(mod_menu_tooltip)
 	
@@ -41,3 +43,11 @@ func _ready():
 
 	mod_menu_tooltip.anchor_right = 1
 	mod_menu_tooltip.anchor_bottom = 1
+	
+	var mod_menu = get_node("mod_menu")
+	mod_menu.visible = false
+	call_deferred("remove_child", mod_menu)
+	main_menu.call_deferred("add_child", mod_menu)
+
+func _open_mod_menu(): main_menu.get_node("mod_menu").visible = true
+func _close_mod_menu(): main_menu.get_node("mod_menu").visible = false
