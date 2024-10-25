@@ -4,9 +4,8 @@
 anchor_right = 0.021
 anchor_bottom = 0.037
 margin_right = -0.32
-margin_bottom = 48.04
-rect_min_size = Vector2( 0, 88 )
-size_flags_horizontal = 3
+margin_bottom = 61.8
+rect_min_size = Vector2( 0, 84 )
 
 [node name="Panel" type="Panel" parent="."]
 anchor_right = 1.0
@@ -19,13 +18,23 @@ margin_left = 12.0
 margin_top = 8.0
 margin_right = -12.0
 margin_bottom = -8.0
+rect_clip_content = true
 
 [node name="Label" type="RichTextLabel" parent="Panel/HBoxContainer"]
-margin_right = 16.0
-margin_bottom = 72.0
+margin_bottom = 68.0
+rect_clip_content = false
 size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_colors/default_color = Color( 0.415686, 0.266667, 0.12549, 1 )
 bbcode_enabled = true
-bbcode_text = "Server Name (16/16)"
-text = "Server Name (16/16)"
 scroll_active = false
+
+[node name="Button" type="Button" parent="Panel/HBoxContainer"]
+visible = false
+margin_left = 4.0
+margin_right = 16.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+text = "Configure"
+clip_text = true

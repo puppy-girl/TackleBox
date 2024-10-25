@@ -3,9 +3,10 @@ extends Node
 onready var main_menu = get_parent()
 onready var menu_list = main_menu.get_node("VBoxContainer")
 
+var gdweave_directory = OS.get_executable_path() + "/../GDWeave"
+
 var loaded_mods = [
-	"TackleBox\nYou're looking at me!",
-	"Test\nA test mod."
+	"Tacklebox\nYou're looking at me!"
 ]
 
 func _ready():
@@ -15,8 +16,6 @@ func _ready():
 	menu_list.add_child(mod_menu_button)
 	menu_list.move_child(mod_menu_button, 4)
 	
-	mod_menu_button.connect("mouse_entered", self, "main_menu._hover_button", [mod_menu_button])
-	mod_menu_button.connect("mouse_exited", self, "main_menu._exit_button", [mod_menu_button])
 	mod_menu_button.add_to_group("menu_button")
 	
 	mod_menu_button.set("size_flags_vertical", Control.SIZE_EXPAND_FILL)
@@ -54,9 +53,25 @@ func _ready():
 	
 	var mod_list = mod_menu.get_node("Panel/Panel2/ScrollContainer/VBoxContainer")
 	
+	if main_menu.loaded_mods:
+		loaded_mods = main_menu.loaded_mods
+
 	for mod in loaded_mods:
 		var mod_panel = preload("res://mods/TackleBox/Scenes/ModPanel/modpanel.tscn").instance()
-		mod_panel.get_node("Panel/HBoxContainer/Label").bbcode_text = mod
+		
+		var file = File.new()
+		var config_path = gdweave_directory + "/configs/" + mod + ".json"
+		
+		var mod_name = mod
+		var mod_description = "No description available."
+		var mod_version = ""
+		
+		mod_panel.get_node("Panel/HBoxContainer/Label").bbcode_text = mod_name + "[color=#587758]" + mod_version + "\n[color=#9d6d2f]" + mod_description
+		
+		if file.file_exists(config_path):
+			mod_panel.get_node("Panel/HBoxContainer/VSeparator").visible = true
+			mod_panel.get_node("Panel/HBoxContainer/Button").visible = true
+		
 		mod_list.add_child(mod_panel)
 	
 	call_deferred("remove_child", mod_menu)
