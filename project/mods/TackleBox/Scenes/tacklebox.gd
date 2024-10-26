@@ -73,7 +73,10 @@ func _ready():
 		
 		if file.file_exists(config_path):
 			mod_panel.get_node("Panel/HBoxContainer/VSeparator").visible = true
-			mod_panel.get_node("Panel/HBoxContainer/Button").visible = true
+			
+			var config_button = mod_panel.get_node("Panel/HBoxContainer/Button")
+			config_button.visible = true
+			config_button.connect("pressed", self, "_open_config", [mod])
 		
 		mod_list.add_child(mod_panel)
 	
@@ -116,3 +119,8 @@ func _get_mod_data():
 		dir.list_dir_end()
 		
 	return mod_data
+
+func _open_config(id):
+	var mod_config = preload("res://mods/TackleBox/Scenes/ModConfig/modconfig.tscn").instance()
+	main_menu.add_child(mod_config)
+	mod_config._initialise(id)
