@@ -7,7 +7,7 @@ var gdweave_directory = OS.get_executable_path() + "/../GDWeave"
 
 # main_menu.loaded_mods will contain loaded mods inserted by GDWeave
 var loaded_mods = [
-	"Tacklebox\nYou're looking at me!"
+	"Tackle Box"
 ]
 
 func _ready():

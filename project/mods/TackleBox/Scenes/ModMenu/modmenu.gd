@@ -20,10 +20,13 @@ func _initialise(loaded_mods):
 		
 		var mod_name = mod_data[mod].name if mod_data and mod_data[mod].name else mod
 		var mod_description = mod_data[mod].description if mod_data and mod_data[mod].description else "No description available."
-		var mod_version = mod_data[mod].version if mod_data and mod_data[mod].version else ""
+		var mod_version = "v" + mod_data[mod].version if mod_data and mod_data[mod].version else ""
 		var mod_author = " by " + mod_data[mod].author if mod_data and mod_data[mod].author else ""
 		
-		mod_panel.get_node("Panel/HBoxContainer/Label").bbcode_text = mod_name + " [color=#587758]" + mod_version + mod_author + "\n[color=#9d6d2f]" + mod_description
+		var mod_header = mod_name + " [color=#587758] " + mod_version + mod_author
+		var mod_body = "\n[color=#9d6d2f]" + mod_description
+		
+		mod_panel.get_node("Panel/HBoxContainer/Label").bbcode_text = mod_header + mod_body
 		
 		if file.file_exists(config_path):
 			mod_panel.get_node("Panel/HBoxContainer/VSeparator").visible = true
