@@ -121,6 +121,8 @@ func _get_mod_data():
 	return mod_data
 
 func _open_config(id):
+	if main_menu.get_node("mod_config"): return
+
 	var mod_config = preload("res://mods/TackleBox/Scenes/ModConfig/modconfig.tscn").instance()
 	main_menu.add_child(mod_config)
 	mod_config._initialise(id)
