@@ -58,3 +58,7 @@ func _update_config(selected, id, key):
 
 func _on_close_pressed():
 	queue_free()
+
+
+func _on_quit_pressed():
+	get_tree().quit()
