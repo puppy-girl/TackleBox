@@ -7,8 +7,6 @@ namespace TackleBox;
 
 public class Mod : IMod {
     public Mod(IModInterface modInterface) {
-        modInterface.Logger.Information(string.Join(' ', modInterface.LoadedMods));
-        
         modInterface.RegisterScriptMod(new TackleBox(modInterface.LoadedMods));
     }
 
