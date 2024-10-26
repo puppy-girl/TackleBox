@@ -25,6 +25,7 @@ func _ready():
 	mod_menu_button.text = "Mods"
 	
 	mod_menu_button.set("custom_colors/font_color", Color(0.42, 0.27, 0.13))
+	mod_menu_button.set("custom_colors/font_color_focus", Color(0.42, 0.27, 0.13))
 	mod_menu_button.set("custom_colors/font_color_hover", Color(1, 0.93, 0.84))
 	mod_menu_button.set("custom_colors/font_color_pressed", Color(1, 0.93, 0.84))
 	mod_menu_button.set("custom_colors/font_color_disabled", Color(1, 0.93, 0.84))
