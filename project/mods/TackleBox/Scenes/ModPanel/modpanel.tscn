@@ -21,7 +21,8 @@ margin_bottom = -8.0
 rect_clip_content = true
 
 [node name="Label" type="RichTextLabel" parent="Panel/HBoxContainer"]
-margin_bottom = 68.0
+margin_right = 16.0
+margin_bottom = 85.0
 rect_clip_content = false
 size_flags_horizontal = 3
 size_flags_vertical = 3
