@@ -7,7 +7,7 @@ var gdweave_directory = OS.get_executable_path() + "/../GDWeave"
 func _initialise(loaded_mods):
 	var mod_list = get_node("Panel/Panel2/ScrollContainer/VBoxContainer")
 	
-	if main_menu.loaded_mods:
+	if "loaded_mods" in main_menu:
 		loaded_mods = main_menu.loaded_mods
 
 	var mod_data = _get_mod_data()
@@ -18,10 +18,10 @@ func _initialise(loaded_mods):
 		var file = File.new()
 		var config_path = gdweave_directory + "/configs/" + mod + ".json"
 		
-		var mod_name = mod_data[mod].name if mod_data[mod].name else mod
-		var mod_description = mod_data[mod].description if mod_data[mod].description else "No description available."
-		var mod_version = mod_data[mod].version if mod_data[mod].version else ""
-		var mod_author = " by " + mod_data[mod].author if mod_data[mod].author else ""
+		var mod_name = mod_data[mod].name if mod_data and mod_data[mod].name else mod
+		var mod_description = mod_data[mod].description if mod_data and mod_data[mod].description else "No description available."
+		var mod_version = mod_data[mod].version if mod_data and mod_data[mod].version else ""
+		var mod_author = " by " + mod_data[mod].author if mod_data and mod_data[mod].author else ""
 		
 		mod_panel.get_node("Panel/HBoxContainer/Label").bbcode_text = mod_name + " [color=#587758]" + mod_version + mod_author + "\n[color=#9d6d2f]" + mod_description
 		
