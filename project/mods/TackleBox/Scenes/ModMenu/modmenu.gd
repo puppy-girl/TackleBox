@@ -7,8 +7,8 @@ var gdweave_directory = OS.get_executable_path() + "/../GDWeave"
 func _initialise(loaded_mods):
 	var mod_list = get_node("Panel/Panel2/ScrollContainer/VBoxContainer")
 	
-	if "loaded_mods" in main_menu:
-		loaded_mods = main_menu.loaded_mods
+	if "loaded_mods" in Globals:
+		loaded_mods = Globals.loaded_mods
 
 	var mod_data = _get_mod_data()
 

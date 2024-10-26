@@ -24,7 +24,7 @@ public class TackleBox : IScriptMod
     }
 
     private readonly string[] _loadedMods;
-    public bool ShouldRun(string path) => path == "res://Scenes/Menus/Main Menu/main_menu.gdc";
+    public bool ShouldRun(string path) => path == "res://Scenes/Singletons/globals.gdc";
 
     public IEnumerable<Token> Modify(string path, IEnumerable<Token> tokens)
     {
