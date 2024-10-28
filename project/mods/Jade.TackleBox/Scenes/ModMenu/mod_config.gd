@@ -11,7 +11,7 @@ onready var TackleBox := $"/root/JadeTackleBox"
 func initialise(mod_id: String) -> void:
 	_mod_id = mod_id
 
-	var mod_data: Dictionary = TackleBox.get_mod_data(mod_id)
+	var mod_data: Dictionary = TackleBox.get_mod_metadata(mod_id)
 	var mod_config: Dictionary = TackleBox.get_mod_config(mod_id)
 	
 	var mod_name: String = mod_data.name if mod_data and mod_data.name else mod_id

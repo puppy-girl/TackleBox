@@ -12,35 +12,54 @@ var configs_directory := gdweave_directory + "configs/"
 
 var _file := File.new()
 var _dir := Directory.new()
+var _mod_manifests: Dictionary
+var _mod_configs: Dictionary
 var _mod_data: Dictionary
-var _config_data: Dictionary
 
 
 func _init() -> void:
-	_init_mod_data()
-	_init_config_data()
+	_init_mod_manifests()
+	_init_mod_configs()
 
 
 func _ready() -> void:
 	get_tree().connect("node_added", self, "_add_mod_menu")
+	print(JSON.print(_mod_manifests, "  "))
 
 
-# Returns mod data for the given mod ID
-func get_mod_data(mod_id: String) -> Dictionary:
-	if !mod_id in _mod_data:
-		push_error("No mod data for mod id " + mod_id)
+# Returns the mod manifest for the given mod ID
+# Keys are returned in snake_case
+func get_mod_manifest(mod_id: String) -> Dictionary:
+	if !mod_id in _mod_manifests:
+		push_error("No mod manifest for mod id " + mod_id)
 		return {}
 	
-	return _mod_data[mod_id]
+	return _mod_manifests[mod_id]
+
+# Returns mod metadata for the given mod ID
+# Keys are returned in snake_case
+func get_mod_metadata(mod_id: String) -> Dictionary:
+	if (
+			!mod_id in _mod_manifests and
+			!"metadata" in _mod_manifests[mod_id] and
+			!mod_id in _mod_data
+	):
+		push_error("No mod metadata for mod id " + mod_id)
+		return {}
+	
+	if "metadata" in _mod_manifests[mod_id]:
+		return _mod_manifests[mod_id].metadata
+	else:
+		return _mod_data[mod_id]
 
 
 # Returns the config file for the given mod ID
 func get_mod_config(mod_id: String) -> Dictionary:
-	if !mod_id in _config_data:
+	if !mod_id in _mod_configs:
 		push_error("No config data for mod id " + mod_id)
 		return {}
 	
-	return _config_data[mod_id]
+	return _mod_configs[mod_id]
 
 
 # Sets the config file for the given mod ID or creates a new one
@@ -60,14 +79,14 @@ func set_mod_config(mod_id: String, new_config: Dictionary) -> int:
 	_file.store_string(JSON.print(new_config, "  "))
 	_file.close()
 	
-	_config_data[mod_id] = new_config
+	_mod_configs[mod_id] = new_config
 	
 	emit_signal("mod_config_updated", mod_id, new_config)
 	
 	return OK
 
 
-func _init_mod_data() -> void:
+func _init_mod_manifests() -> void:
 	if _dir.open(mods_directory) != OK:
 		push_error("Could not open mods directory")
 		return
@@ -89,6 +108,7 @@ func _init_mod_data() -> void:
 			var manifest_data := JSON.parse(_file.get_as_text())
 			if manifest_data.error == OK and "Id" in manifest_data.result:
 				mod_id = manifest_data.result.Id
+				_mod_manifests[mod_id] = _snakeify_keys(manifest_data.result)
 			
 			_file.close()
 		
@@ -108,7 +128,7 @@ func _init_mod_data() -> void:
 	_dir.list_dir_end()
 
 
-func _init_config_data() -> void:
+func _init_mod_configs() -> void:
 	if _dir.open(configs_directory) != OK:
 		push_error("Could not open config directory")
 		return
@@ -124,13 +144,31 @@ func _init_config_data() -> void:
 		
 		var config_data := JSON.parse(_file.get_as_text())
 		if config_data.error == OK and config_data.result is Dictionary:
-			_config_data[mod_id] = config_data.result
+			_mod_configs[mod_id] = config_data.result
 		
 		_file.close()
 		
 		file_name = _dir.get_next()
 	
 	_dir.list_dir_end()
+
+
+func _snakeify_keys(input: Dictionary) -> Dictionary:
+	var new_dictionary := {}
+
+	for key in input:
+		if input[key] is Dictionary:
+			new_dictionary[_to_snake_case(key)] = _snakeify_keys(input[key])
+		else:
+			new_dictionary[_to_snake_case(key)] = input[key]
+	
+	return new_dictionary
+
+
+func _to_snake_case(input: String) -> String:
+	var regex = RegEx.new()
+	regex.compile("([a-z])([A-Z])")
+	return regex.sub(input, "$1_$2", true).to_lower()
 
 
 func _add_mod_menu(node: Node) -> void:

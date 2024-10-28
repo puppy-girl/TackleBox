@@ -18,7 +18,7 @@ func _ready() -> void:
 	for mod_id in _loaded_mods:
 		var mod_panel := MOD_PANEL.instance()
 		
-		var mod_data: Dictionary = TackleBox.get_mod_data(mod_id)
+		var mod_data: Dictionary = TackleBox.get_mod_metadata(mod_id)
 		
 		var mod_name: String = mod_data.name if mod_data and mod_data.name else mod_id
 		var mod_description: String = mod_data.description if mod_data and mod_data.description else "No description available."
