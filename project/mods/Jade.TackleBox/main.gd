@@ -24,7 +24,6 @@ func _init() -> void:
 
 func _ready() -> void:
 	get_tree().connect("node_added", self, "_add_mod_menu")
-	print(JSON.print(_mod_manifests, "  "))
 
 
 # Returns the mod manifest for the given mod ID
