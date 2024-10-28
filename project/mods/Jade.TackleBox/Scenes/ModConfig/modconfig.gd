@@ -83,8 +83,8 @@ func _on_apply_pressed():
 func _on_restart_pressed():
 	_apply_changes()
 	
-	# I have to use start for some reason because GDWeave will not be present.
-	OS.execute("cmd", ["/C", "start", OS.get_executable_path()], false)
+	# Commenting this out for now as it doesn't seem to be relaunching GDWeave.
+	#OS.execute("cmd", ["/C", "start", OS.get_executable_path()], false)
 	get_tree().quit()
 
 func _on_close_pressed():
