@@ -1,15 +1,17 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Scenes/Menus/Main Menu/ui_generic_button.gd" type="Script" id=1]
-[ext_resource path="res://mods/TackleBox/Scenes/ModConfig/modconfig.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Themes/main.tres" type="Theme" id=1]
+[ext_resource path="res://Assets/Themes/main_font_tiny.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Assets/Themes/panel_med.tres" type="StyleBox" id=3]
-[ext_resource path="res://Assets/Themes/main.tres" type="Theme" id=4]
+[ext_resource path="res://Scenes/Menus/Main Menu/ui_generic_button.gd" type="Script" id=4]
+[ext_resource path="res://mods/Jade.TackleBox/Scenes/ModConfig/modconfig.gd" type="Script" id=5]
 
 [node name="mod_config" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_pivot_offset = Vector2( -335, -90 )
-script = ExtResource( 2 )
+theme = ExtResource( 1 )
+script = ExtResource( 5 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -57,12 +59,19 @@ margin_bottom = 584.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="Panel/config/ScrollContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="Panel/config/ScrollContainer/VBoxContainer"]
 margin_right = 704.0
-margin_bottom = 54.0
-rect_min_size = Vector2( 0, 54 )
-theme = ExtResource( 4 )
-text = "Mod config changes won't take effect until next start!"
+margin_bottom = 34.0
+theme = ExtResource( 1 )
+text = "MODNAME"
+
+[node name="Warn" type="Label" parent="Panel/config/ScrollContainer/VBoxContainer"]
+margin_top = 38.0
+margin_right = 704.0
+margin_bottom = 59.0
+theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "Changes won't take effect until next start!"
 
 [node name="close" type="Button" parent="Panel"]
 anchor_left = 0.957031
@@ -72,23 +81,37 @@ anchor_bottom = -0.0123457
 margin_right = 40.0
 margin_bottom = 40.0
 text = "X"
-script = ExtResource( 1 )
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="quit" type="Button" parent="Panel"]
-anchor_left = 0.703125
+[node name="restart" type="Button" parent="Panel"]
 anchor_top = 0.898148
-anchor_right = 0.703125
 anchor_bottom = 0.898148
-margin_right = 240.0
+margin_left = -16.0
+margin_right = 224.0
 margin_bottom = 80.0
-text = "Quit Game"
-script = ExtResource( 1 )
+text = "Apply & Quit"
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="apply" type="Button" parent="Panel"]
+anchor_left = 1.0
+anchor_top = 0.898148
+anchor_right = 1.0
+anchor_bottom = 0.898148
+margin_left = -193.0
+margin_right = 19.0
+margin_bottom = 80.0
+text = "Save Changes"
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
 [connection signal="pressed" from="Panel/close" to="." method="_on_close_pressed"]
-[connection signal="pressed" from="Panel/quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Panel/restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Panel/apply" to="." method="_on_apply_pressed"]

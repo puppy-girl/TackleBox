@@ -52,7 +52,7 @@ func _ready():
 	mod_menu_tooltip.anchor_bottom = 1
 	
 	# Append the mod menu to the main menu node
-	var mod_menu = preload("res://mods/TackleBox/Scenes/ModMenu/modmenu.tscn").instance()
+	var mod_menu = preload("res://mods/Jade.TackleBox/Scenes/ModMenu/modmenu.tscn").instance()
 	mod_menu.visible = false
 	main_menu.call_deferred("add_child", mod_menu)
 	mod_menu.call_deferred("_initialise", loaded_mods)

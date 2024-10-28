@@ -1,6 +1,6 @@
 extends Node
 
-const TACKLEBOX = preload("res://mods/TackleBox/Scenes/tacklebox.tscn")
+const TACKLEBOX = preload("res://mods/Jade.TackleBox/Scenes/tacklebox.tscn")
 
 func _ready():
 	get_tree().connect("node_added", self, "_init_tacklebox")
