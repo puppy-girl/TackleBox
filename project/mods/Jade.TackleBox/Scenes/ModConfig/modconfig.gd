@@ -57,8 +57,7 @@ func _initialise(id, title):
 		option.add_item("Disabled")
 		option.selected = 0 if config[key] else 1
 		
-		options[id] = [key, option]
-		print(options[id])
+		options[key] = option
 		
 		line.add_child(option)
 		options_list.add_child(line)
@@ -70,17 +69,12 @@ func _update_config(selected, key):
 	var config_path = gdweave_directory + "/configs/" + mod_id + ".json"
 	
 	config_file.open(config_path, File.WRITE)
-	config_file.store_string(JSON.print(config, "	")) # no, just no; use tabs how they're intended to.
+	config_file.store_string(JSON.print(config, "  "))
 	config_file.close()
 
 func _apply_changes():
-	for id in options:
-		var option = options[id]
-		
-		var key = option[0]
-		var selected = option[1].selected
-		
-		_update_config(selected, key)
+	for key in options:		
+		_update_config(options[key].selected, key)
 
 func _on_apply_pressed():
 	_apply_changes()
