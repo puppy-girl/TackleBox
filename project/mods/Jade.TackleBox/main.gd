@@ -45,10 +45,13 @@ func get_mod_config(mod_id: String) -> Dictionary:
 
 # Sets the config file for the given mod ID or creates a new one
 func set_mod_config(mod_id: String, new_config: Dictionary) -> int:
-	var config_file_path = configs_directory + mod_id + ".json"
+	if mod_id.find("/") != -1 or mod_id.find("\\") != -1:
+		return ERR_INVALID_PARAMETER
 	
 	if !new_config is Dictionary:
 		return ERR_INVALID_DATA
+	
+	var config_file_path = configs_directory + mod_id + ".json"
 	
 	var config_file_err := _file.open(config_file_path, File.WRITE)
 	if config_file_err != OK:
