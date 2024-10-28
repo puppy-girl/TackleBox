@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Scenes/Menus/Main Menu/ui_generic_button.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Themes/panel_med.tres" type="StyleBox" id=2]
-[ext_resource path="res://Assets/Textures/UI/knot_sep2.png" type="Texture" id=3]
-[ext_resource path="res://mods/TackleBox/Scenes/ModMenu/modmenu.gd" type="Script" id=4]
+[ext_resource path="res://Assets/Themes/panel_med.tres" type="StyleBox" id=1]
+[ext_resource path="res://Scenes/Menus/Main Menu/ui_generic_button.gd" type="Script" id=2]
+[ext_resource path="res://mods/Jade.TackleBox/Scenes/ModMenu/modmenu.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Textures/UI/knot_sep2.png" type="Texture" id=4]
 
 [node name="mod_menu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 4 )
+script = ExtResource( 3 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -43,7 +43,7 @@ anchor_right = 1.0
 anchor_bottom = 0.0787037
 rect_min_size = Vector2( 0, 32 )
 size_flags_horizontal = 3
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 expand = true
 stretch_mode = 4
 __meta__ = {
@@ -60,7 +60,7 @@ margin_top = 2.09808e-05
 margin_right = -0.323853
 margin_bottom = 6.30402
 text = "X"
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -73,7 +73,7 @@ margin_left = 16.0
 margin_top = 16.0
 margin_right = -16.0
 margin_bottom = -16.0
-custom_styles/panel = ExtResource( 2 )
+custom_styles/panel = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": true
 }

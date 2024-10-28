@@ -13,7 +13,7 @@ func _initialise(loaded_mods):
 	var mod_data = _get_mod_data()
 
 	for mod in loaded_mods:
-		var mod_panel = preload("res://mods/TackleBox/Scenes/ModPanel/modpanel.tscn").instance()
+		var mod_panel = preload("res://mods/Jade.TackleBox/Scenes/ModPanel/modpanel.tscn").instance()
 		
 		var file = File.new()
 		var config_path = gdweave_directory + "/configs/" + mod + ".json"
@@ -33,7 +33,7 @@ func _initialise(loaded_mods):
 			
 			var config_button = mod_panel.get_node("Panel/HBoxContainer/Button")
 			config_button.visible = true
-			config_button.connect("pressed", self, "_open_config", [mod])
+			config_button.connect("pressed", self, "_open_config", [mod, mod_name])
 		
 		mod_list.add_child(mod_panel)
 
@@ -71,11 +71,11 @@ func _get_mod_data():
 		
 	return mod_data
 
-func _open_config(id):
+func _open_config(id, title):
 	if main_menu.get_node("mod_config"): return
 
-	var mod_config = preload("res://mods/TackleBox/Scenes/ModConfig/modconfig.tscn").instance()
+	var mod_config = preload("res://mods/Jade.TackleBox/Scenes/ModConfig/modconfig.tscn").instance()
 	main_menu.add_child(mod_config)
-	mod_config._initialise(id)
+	mod_config._initialise(id, title)
 
 func _close_mod_menu(): main_menu.get_node("mod_menu").visible = false
