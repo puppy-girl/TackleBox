@@ -12,13 +12,41 @@ Adds a button to Webfishing's main menu to view a list of the mods currently loa
 [Download Tackle Box](https://github.com/puppy-girl/TackleBox/releases/latest/download/TackleBox.zip) and put the extracted mod folder into `GDWeave/mods`. Your `mods` folder should hold a `TackleBox` directory with all the mod files inside it ૮˶• ﻌ •˶ა
 
 ## For Mod Developers
-Tackle Box can display additional metadata for loaded mods, as seen in-game! Tackle Box gets this information from a `mod.json` file in the mod directory, placed alongside `manifest.json`. If you'd like your mod to show richer information in Tackle Box just create a `mod.json` file with the following fields:
+Tackle Box can display additional metadata for loaded mods, such as its current version, author, and a brief description! To include richer metadata with your mod for Tackle Box to display, add a `"Metadata"` key to your `manifest.json` with the following value:
 ```json
 {
-    "name": "The name of your mod!",
-    "version": "Your mod's current version, formatted as a string",
-    "description": "A brief description of your mod, ideally below 75-80 characters",
-    "author": "Your name! <3"
+    "Name": "The name of your mod",
+    "Author": "Your name goes here~!",
+    "Version": "Your mod's current version formatted as a string",
+    "Description": "A brief description of your mod, ideally below 75-80 characters"
 }
 ```
-More fields will be added in future as the functionality of Tackle Box expands but mods won't be required to include or update the `mod.json` file.
+For an example of what your manifest should look like, check out [Tackle Box's manifest](https://github.com/puppy-girl/TackleBox/blob/main/TackleBox/manifest.json)!
+
+Additionally, as of version 0.2.0, Tackle Box comes with additional utilities for developers to take advantage of. To use Tackle Box's utilities in your code, add the following to the top of your script:
+
+`onready var TackleBox := $"/root/JadeTackleBox"`
+
+### Signals
+
+`signal mod_config_updated(mod_id, config)`
+
+Emits a signal every time a mod's config is updated through Tackle Box's methods
+
+### Methods
+
+`get_mod_manifest(mod_id: String) -> Dictionary`
+
+Returns the mod manifest for the given mod ID. Keys are returned in snake_case
+
+`get_mod_metadata(mod_id: String) -> Dictionary`
+
+Returns the mod metadata for the given mod ID. Keys are returned in snake_case
+
+`get_mod_config(mod_id: String) -> Dictionary`
+
+Returns the config for the given mod ID.
+
+`set_mod_config(mod_id: String, new_config: Dictionary) -> int`
+
+Sets the config for the given mod ID and creates a new config file if one doesn't exist; returns an error code if unable to write to the config
