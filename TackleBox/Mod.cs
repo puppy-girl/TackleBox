@@ -15,15 +15,9 @@ public class Mod : IMod {
     }
 }
 
-public class TackleBox : IScriptMod
+public class TackleBox(string[] loadedMods) : IScriptMod
 {
-    public TackleBox(string[] loadedMods)
-    {
-        this._loadedMods = loadedMods;
-        loadedMods = [];
-    }
-
-    private readonly string[] _loadedMods;
+    private string[] LoadedMods { get; } = loadedMods;
     public bool ShouldRun(string path) => path == "res://Scenes/Singletons/globals.gdc";
 
     public IEnumerable<Token> Modify(string path, IEnumerable<Token> tokens)
@@ -45,10 +39,10 @@ public class TackleBox : IScriptMod
             yield return new Token(TokenType.BracketOpen);
 
             var i = 0;
-            foreach (var mod in _loadedMods)
+            foreach (var mod in LoadedMods)
             {
                 yield return new ConstantToken(new StringVariant(mod));
-                if (i++ < _loadedMods.Length)
+                if (i++ < LoadedMods.Length)
                 {
                     yield return new Token(TokenType.Comma);
                 }
