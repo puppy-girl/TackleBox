@@ -1,12 +1,12 @@
 extends Node
 
-const MOD_PANEL = preload("res://mods/Jade.TackleBox/Scenes/ModMenu/mod_panel.tscn")
-const MOD_CONFIG = preload("res://mods/Jade.TackleBox/Scenes/ModMenu/mod_config.tscn")
+const MOD_PANEL = preload("res://mods/TackleBox/Scenes/ModMenu/mod_panel.tscn")
+const MOD_CONFIG = preload("res://mods/TackleBox/Scenes/ModMenu/mod_config.tscn")
 
-var _loaded_mods := [ "Jade.TackleBox" ] # Put your mod ID here when testing
+var _loaded_mods := [ "TackleBox" ] # Put your mod ID here when testing
 
 onready var main_menu := get_parent()
-onready var TackleBox := $"/root/JadeTackleBox"
+onready var TackleBox := $"/root/TackleBox"
 
 
 func _ready() -> void:

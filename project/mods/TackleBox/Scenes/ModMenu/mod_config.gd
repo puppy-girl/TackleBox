@@ -5,7 +5,7 @@ var _options := {}
 
 onready var options_list := $"Panel/config/ScrollContainer/VBoxContainer"
 onready var mod_title := $"Panel/config/ScrollContainer/VBoxContainer/Title"
-onready var TackleBox := $"/root/JadeTackleBox"
+onready var TackleBox := $"/root/TackleBox"
 
 
 func initialise(mod_id: String) -> void:

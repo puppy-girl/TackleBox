@@ -25,7 +25,7 @@ For an example of what your manifest should look like, check out [Tackle Box's m
 
 Additionally, as of version 0.2.0, Tackle Box comes with additional utilities for developers to take advantage of. To use Tackle Box's utilities in your code, add the following to the top of your script:
 
-`onready var TackleBox := $"/root/JadeTackleBox"`
+`onready var TackleBox := $"/root/TackleBox"`
 
 ### Signals
 

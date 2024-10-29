@@ -1,11 +1,11 @@
 {
-  "Id": "Jade.TackleBox",
+  "Id": "TackleBox",
   "AssemblyPath": "TackleBox.dll",
   "PackPath": "TackleBox.pck",
   "Metadata": {
     "Name": "Tackle Box",
     "Author": "Jade",
-    "Version": "0.2.0",
+    "Version": "0.2.1",
     "Description": "View and configure installed mods. You're looking at me!"
   }
 }

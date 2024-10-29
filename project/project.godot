@@ -9,19 +9,13 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "GenericUIButton",
+"base": "Reference",
 "class": "ModsButton",
 "language": "GDScript",
-"path": "res://mods/Jade.TackleBox/Scenes/mods_button.gd"
-}, {
-"base": "Node",
-"class": "TackleBox",
-"language": "GDScript",
-"path": "res://mods/Jade.TackleBox/main.gd"
+"path": "res://mods/TackleBox/Scenes/mods_button.gd"
 } ]
 _global_script_class_icons={
-"ModsButton": "",
-"TackleBox": ""
+"ModsButton": ""
 }
 
 [application]

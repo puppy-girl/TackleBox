@@ -1,10 +1,9 @@
-class_name TackleBox
 extends Node
 
 signal mod_config_updated(mod_id, config)
 
-const MODS_MENU = preload("res://mods/Jade.TackleBox/Scenes/ModMenu/mods_menu.tscn")
-const MODS_BUTTON = preload("res://mods/Jade.TackleBox/Scenes/mods_button.tscn")
+const MODS_MENU = preload("res://mods/TackleBox/Scenes/ModMenu/mods_menu.tscn")
+const MODS_BUTTON = preload("res://mods/TackleBox/Scenes/mods_button.tscn")
 
 var gdweave_directory := OS.get_executable_path() + "/../GDWeave/"
 var mods_directory := gdweave_directory + "mods/"
@@ -38,18 +37,14 @@ func get_mod_manifest(mod_id: String) -> Dictionary:
 # Returns mod metadata for the given mod ID
 # Keys are returned in snake_case
 func get_mod_metadata(mod_id: String) -> Dictionary:
-	if (
-			!mod_id in _mod_manifests and
-			!"metadata" in _mod_manifests[mod_id] and
-			!mod_id in _mod_data
-	):
-		push_error("No mod metadata for mod id " + mod_id)
-		return {}
-	
-	if "metadata" in _mod_manifests[mod_id]:
-		return _mod_manifests[mod_id].metadata
-	else:
+	if mod_id in _mod_data:
 		return _mod_data[mod_id]
+	
+	if mod_id in _mod_manifests and "metadata" in _mod_manifests[mod_id]:
+		return _mod_manifests[mod_id].metadata
+	
+	push_error("No mod metadata for mod id " + mod_id)
+	return {}
 
 
 # Returns the config file for the given mod ID
