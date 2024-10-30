@@ -34,6 +34,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 18
 
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/HBoxContainer"]
+visible = false
+margin_right = 72.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 72, 72 )
+expand = true
+
 [node name="ModInfo" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
 margin_right = 100.0
 margin_bottom = 85.0

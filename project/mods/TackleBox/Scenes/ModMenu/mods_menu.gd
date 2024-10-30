@@ -3,7 +3,7 @@ extends Node
 const MOD_PANEL = preload("res://mods/TackleBox/Scenes/ModMenu/mod_panel.tscn")
 const MOD_CONFIG = preload("res://mods/TackleBox/Scenes/ModMenu/mod_config.tscn")
 
-var _loaded_mods := [ "TackleBox" ] # Put your mod ID here when testing
+var _loaded_mods := [ "TackleBox", "Sulayre.Lure" ] # Put your mod ID here when testing
 
 onready var main_menu := get_parent()
 onready var TackleBox := $"/root/TackleBox"
@@ -34,6 +34,13 @@ func _ready() -> void:
 			var config_button := mod_panel.get_node("PanelContainer/HBoxContainer/Button")
 			config_button.visible = true
 			config_button.connect("pressed", self, "_open_config", [mod_id])
+		
+		var mod_icon_path: String = "res://mods/" + mod_id + "/icon.png"
+		if ResourceLoader.exists(mod_icon_path):
+			var mod_icon := mod_panel.get_node("PanelContainer/HBoxContainer/TextureRect")
+			
+			mod_icon.texture = load(mod_icon_path)
+			mod_icon.visible = true
 		
 		mod_list.add_child(mod_panel)
 
