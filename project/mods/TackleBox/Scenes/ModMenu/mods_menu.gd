@@ -27,17 +27,17 @@ func _ready() -> void:
 		
 		var mod_header := mod_name + " [color=#587758] " + mod_version + mod_author
 		
-		mod_panel.get_node("PanelContainer/HBoxContainer/ModInfo/ModName").bbcode_text = mod_header
-		mod_panel.get_node("PanelContainer/HBoxContainer/ModInfo/ModDescription").text = mod_description
+		mod_panel.get_node("HBoxContainer/ModInfo/ModName").bbcode_text = mod_header
+		mod_panel.get_node("HBoxContainer/ModInfo/ModDescription").text = mod_description
 		
 		if TackleBox.get_mod_config(mod_id):
-			var config_button := mod_panel.get_node("PanelContainer/HBoxContainer/Button")
+			var config_button := mod_panel.get_node("HBoxContainer/Button")
 			config_button.visible = true
 			config_button.connect("pressed", self, "_open_config", [mod_id])
 		
 		var mod_icon_path: String = "res://mods/" + mod_id + "/icon.png"
 		if ResourceLoader.exists(mod_icon_path):
-			var mod_icon := mod_panel.get_node("PanelContainer/HBoxContainer/TextureRect")
+			var mod_icon := mod_panel.get_node("HBoxContainer/TextureRect")
 			
 			mod_icon.texture = load(mod_icon_path)
 			mod_icon.visible = true

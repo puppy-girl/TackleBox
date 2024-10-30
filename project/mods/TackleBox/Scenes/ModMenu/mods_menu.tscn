@@ -91,6 +91,6 @@ margin_right = 1088.0
 margin_bottom = 535.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/separation = 16
+custom_constants/separation = 8
 
 [connection signal="pressed" from="Panel/close" to="." method="_on_close_pressed"]
