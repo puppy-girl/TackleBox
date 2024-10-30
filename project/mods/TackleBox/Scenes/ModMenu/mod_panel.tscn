@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Menus/Main Menu/ui_generic_button.gd" type="Script" id=1]
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 16.0
@@ -59,3 +61,4 @@ margin_bottom = 72.0
 rect_min_size = Vector2( 216, 72 )
 size_flags_vertical = 0
 text = "Configure"
+script = ExtResource( 1 )
