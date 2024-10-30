@@ -3,8 +3,6 @@ extends Node
 var _mod_id: String
 var _options := {}
 
-onready var options_list := $"Panel/config/ScrollContainer/VBoxContainer"
-onready var mod_title := $"Panel/config/ScrollContainer/VBoxContainer/Title"
 onready var TackleBox := $"/root/TackleBox"
 
 
@@ -15,7 +13,7 @@ func initialise(mod_id: String) -> void:
 	var mod_config: Dictionary = TackleBox.get_mod_config(mod_id)
 	
 	var mod_name: String = mod_data.name if mod_data and mod_data.name else mod_id
-	mod_title.text = "Configuring " + mod_name
+	$"%Title".text = "Configuring " + mod_name
 	
 	var config_key_regex := RegEx.new()
 	config_key_regex.compile("([a-z])([A-Z])")
@@ -44,7 +42,7 @@ func initialise(mod_id: String) -> void:
 		_options[key] = option
 		
 		line.add_child(option)
-		options_list.add_child(line)
+		$"%VBoxContainer".add_child(line)
 
 
 func _update_config() -> int:

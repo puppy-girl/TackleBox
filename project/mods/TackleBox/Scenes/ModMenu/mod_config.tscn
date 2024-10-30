@@ -1,11 +1,26 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Assets/Themes/main.tres" type="Theme" id=1]
-[ext_resource path="res://Assets/Themes/main_font_tiny.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Assets/Themes/panel_med.tres" type="StyleBox" id=3]
+[ext_resource path="res://Assets/Themes/accid___.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Scenes/Menus/Main Menu/ui_generic_button.gd" type="Script" id=4]
 [ext_resource path="res://mods/TackleBox/Scenes/ModMenu/mod_config.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/Singletons/Tooltips/tooltip_node.gd" type="Script" id=6]
+[ext_resource path="res://Assets/Textures/UI/knot_sep2.png" type="Texture" id=7]
+
+[sub_resource type="DynamicFont" id=2]
+size = 48
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 16.0
+content_margin_right = 16.0
+content_margin_top = 16.0
+content_margin_bottom = 16.0
+bg_color = Color( 0.835294, 0.666667, 0.45098, 1 )
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [node name="mod_config" type="Control"]
 anchor_right = 1.0
@@ -29,50 +44,66 @@ anchor_top = 0.2
 anchor_right = 0.7
 anchor_bottom = 0.8
 
+[node name="Title" type="Label" parent="Panel"]
+unique_name_in_owner = true
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 752.0
+margin_bottom = 58.0
+theme = ExtResource( 1 )
+custom_fonts/font = SubResource( 2 )
+text = "CONFIGURING MODNAME"
+align = 1
+
+[node name="sep" type="TextureRect" parent="Panel"]
+anchor_top = 0.123457
+anchor_right = 1.0
+anchor_bottom = 0.17284
+rect_min_size = Vector2( 0, 32 )
+size_flags_horizontal = 3
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
 [node name="Panel" type="Panel" parent="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 16.0
-margin_top = 16.0
+margin_top = 131.0
 margin_right = -16.0
 margin_bottom = -16.0
-custom_styles/panel = ExtResource( 3 )
+custom_styles/panel = SubResource( 1 )
 
-[node name="config" type="Control" parent="Panel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/config"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 32.0
-margin_top = 32.0
+margin_top = 8.0
 margin_right = -32.0
-margin_bottom = -32.0
+margin_bottom = -8.0
 __meta__ = {
 "_editor_description_": "	"
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/config/ScrollContainer"]
-margin_right = 704.0
-margin_bottom = 584.0
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Panel/ScrollContainer"]
+unique_name_in_owner = true
+margin_right = 672.0
+margin_bottom = 485.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Title" type="Label" parent="Panel/config/ScrollContainer/VBoxContainer"]
-margin_right = 704.0
-margin_bottom = 34.0
+[node name="Warn" type="Label" parent="Panel/Panel/ScrollContainer/VBoxContainer"]
+margin_right = 672.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 0, 48 )
 theme = ExtResource( 1 )
-text = "MODNAME"
-
-[node name="Warn" type="Label" parent="Panel/config/ScrollContainer/VBoxContainer"]
-margin_top = 38.0
-margin_right = 704.0
-margin_bottom = 59.0
-theme = ExtResource( 1 )
-custom_fonts/font = ExtResource( 2 )
-text = "Changes won't take effect until next start!"
+custom_colors/font_color = Color( 0.415686, 0.266667, 0.12549, 1 )
+text = "Some changes may not take effect until the next launch!"
+align = 1
+valign = 1
 
 [node name="close" type="Button" parent="Panel"]
 anchor_left = 0.957031
