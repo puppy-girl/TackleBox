@@ -166,17 +166,21 @@ func _to_snake_case(input: String) -> String:
 
 
 func _add_mod_menu(node: Node) -> void:
-	if node.name != "main_menu":
-		return
-	
-	var mod_menu: Node = MODS_MENU.instance()
-	mod_menu.visible = false
-	
-	node.add_child(mod_menu)
-	
-	var menu_list: Node = node.get_node("VBoxContainer")
-	var button: Button = MODS_BUTTON.instance()
-	
-	menu_list.margin_top = -50
-	menu_list.add_child(button)
-	menu_list.move_child(button, 4)
+	if node.name == "main_menu" or node.name == "esc_menu":
+		var mod_menu: Node = MODS_MENU.instance()
+		mod_menu.visible = false
+		
+		node.add_child(mod_menu)
+		
+		var menu_list: Node = node.get_node("VBoxContainer")
+		var button: Button = MODS_BUTTON.instance()
+		var settings_button: Node = menu_list.get_node("settings")
+		
+		menu_list.add_child(button)
+		menu_list.move_child(button, settings_button.get_index() + 1)
+		
+		if node.name == "main_menu":
+			menu_list.margin_top -= 48
+		else:
+			menu_list.margin_top -= 24
+			menu_list.margin_bottom += 24
