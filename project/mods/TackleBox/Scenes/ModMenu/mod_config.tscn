@@ -93,23 +93,24 @@ custom_styles/panel = SubResource( 1 )
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 32.0
+margin_left = 16.0
 margin_top = 8.0
-margin_right = -32.0
-margin_bottom = -32.0
+margin_right = -16.0
+margin_bottom = -51.0
 __meta__ = {
 "_editor_description_": "	"
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/Panel/ScrollContainer"]
 unique_name_in_owner = true
-margin_right = 672.0
-margin_bottom = 461.0
+margin_right = 704.0
+margin_bottom = 442.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 4
 
 [node name="Warn" type="Label" parent="Panel/Panel/ScrollContainer/VBoxContainer"]
-margin_right = 672.0
+margin_right = 704.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 0, 48 )
 theme = ExtResource( 1 )
