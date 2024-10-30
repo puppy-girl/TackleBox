@@ -32,7 +32,7 @@ margin_left = 29.872
 margin_top = -0.200001
 margin_right = 29.8719
 margin_bottom = -0.200001
-text = "Installed Mods"
+text = "Loaded Mods"
 __meta__ = {
 "_edit_use_anchors_": true
 }
