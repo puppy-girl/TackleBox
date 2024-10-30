@@ -12,12 +12,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="manifest.json" CopyToOutputDirectory="PreserveNewest"/>
+        <None Include="../manifest.json" CopyToOutputDirectory="PreserveNewest"/>
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(GDWeavePath)' != ''">
         <ItemGroup>
-            <ModFiles Include="$(TargetDir)manifest.json"/>
+            <ModFiles Include="../manifest.json"/>
             <ModFiles Include="$(TargetDir)$(AssemblyName).dll"/>
             <ModFiles Include="../project/$(AssemblyName).pck"/>
         </ItemGroup>
