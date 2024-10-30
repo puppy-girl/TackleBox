@@ -18,7 +18,7 @@ Tackle Box can display additional metadata for loaded mods, such as its current 
     "Name": "The name of your mod",
     "Author": "Your name goes here~!",
     "Version": "Your mod's current version formatted as a string",
-    "Description": "A brief description of your mod, ideally below 75-80 characters"
+    "Description": "A brief description of your mod"
 }
 ```
 For an example of what your manifest should look like, check out [Tackle Box's manifest](https://github.com/puppy-girl/TackleBox/blob/main/manifest.json)!
