@@ -1,4 +1,15 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 16.0
+content_margin_right = 8.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+bg_color = Color( 1, 0.933333, 0.835294, 1 )
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [node name="mod_panel" type="Control"]
 anchor_right = 0.021
@@ -7,35 +18,44 @@ margin_right = -0.32
 margin_bottom = 61.8
 rect_min_size = Vector2( 0, 84 )
 
-[node name="Panel" type="Panel" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_styles/panel = SubResource( 1 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 12.0
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+margin_left = 16.0
 margin_top = 8.0
-margin_right = -12.0
-margin_bottom = -8.0
-rect_clip_content = true
-
-[node name="Label" type="RichTextLabel" parent="Panel/HBoxContainer"]
-margin_right = 16.0
-margin_bottom = 85.0
-rect_clip_content = false
+margin_right = 350.0
+margin_bottom = 93.76
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 18
+
+[node name="ModInfo" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
+margin_right = 100.0
+margin_bottom = 85.0
+size_flags_horizontal = 3
+
+[node name="ModName" type="RichTextLabel" parent="PanelContainer/HBoxContainer/ModInfo"]
+margin_right = 100.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 100, 36 )
+size_flags_horizontal = 3
 custom_colors/default_color = Color( 0.415686, 0.266667, 0.12549, 1 )
 bbcode_enabled = true
-scroll_active = false
 
-[node name="Button" type="Button" parent="Panel/HBoxContainer"]
-visible = false
-margin_left = 4.0
-margin_right = 16.0
-margin_bottom = 44.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.25
+[node name="ModDescription" type="Label" parent="PanelContainer/HBoxContainer/ModInfo"]
+margin_top = 40.0
+margin_right = 100.0
+margin_bottom = 54.0
+custom_colors/font_color = Color( 0.592157, 0.380392, 0.168627, 1 )
+autowrap = true
+
+[node name="Button" type="Button" parent="PanelContainer/HBoxContainer"]
+margin_left = 118.0
+margin_right = 334.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 216, 72 )
+size_flags_vertical = 0
 text = "Configure"
-clip_text = true

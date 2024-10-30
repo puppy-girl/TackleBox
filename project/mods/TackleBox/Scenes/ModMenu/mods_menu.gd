@@ -26,12 +26,12 @@ func _ready() -> void:
 		var mod_author: String = " by " + mod_data.author if mod_data and mod_data.author else ""
 		
 		var mod_header := mod_name + " [color=#587758] " + mod_version + mod_author
-		var mod_body := "\n[color=#9d6d2f]" + mod_description
 		
-		mod_panel.get_node("Panel/HBoxContainer/Label").bbcode_text = mod_header + mod_body
+		mod_panel.get_node("PanelContainer/HBoxContainer/ModInfo/ModName").bbcode_text = mod_header
+		mod_panel.get_node("PanelContainer/HBoxContainer/ModInfo/ModDescription").text = mod_description
 		
 		if TackleBox.get_mod_config(mod_id):
-			var config_button := mod_panel.get_node("Panel/HBoxContainer/Button")
+			var config_button := mod_panel.get_node("PanelContainer/HBoxContainer/Button")
 			config_button.visible = true
 			config_button.connect("pressed", self, "_open_config", [mod_id])
 		
