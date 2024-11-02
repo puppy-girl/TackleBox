@@ -8,17 +8,21 @@ const MODS_BUTTON = preload("res://mods/TackleBox/Scenes/mods_button.tscn")
 var gdweave_directory := OS.get_executable_path() + "/../GDWeave/"
 var mods_directory := gdweave_directory + "mods/"
 var configs_directory := gdweave_directory + "configs/"
+var loaded_mods: Array
 
 var _file := File.new()
 var _dir := Directory.new()
 var _mod_manifests: Dictionary
 var _mod_configs: Dictionary
 var _mod_data: Dictionary
+# Add your mod ID here when testing in the editor
+var _default_loaded_mods := [ "TackleBox" ]
 
 
 func _init() -> void:
 	_init_mod_manifests()
 	_init_mod_configs()
+	loaded_mods = _get_loaded_mods()
 
 
 func _ready() -> void:
@@ -33,6 +37,7 @@ func get_mod_manifest(mod_id: String) -> Dictionary:
 		return {}
 	
 	return _mod_manifests[mod_id]
+
 
 # Returns mod metadata for the given mod ID
 # Keys are returned in snake_case
@@ -147,22 +152,30 @@ func _init_mod_configs() -> void:
 	_dir.list_dir_end()
 
 
-func _snakeify_keys(input: Dictionary) -> Dictionary:
-	var new_dictionary := {}
-
-	for key in input:
-		if input[key] is Dictionary:
-			new_dictionary[_to_snake_case(key)] = _snakeify_keys(input[key])
-		else:
-			new_dictionary[_to_snake_case(key)] = input[key]
+func _get_loaded_mods() -> Array:
+	if OS.has_feature("editor"):
+		return _default_loaded_mods
 	
-	return new_dictionary
+	var log_file_path := gdweave_directory + "GDWeave.log"
+	var mods := []
 
-
-func _to_snake_case(input: String) -> String:
 	var regex = RegEx.new()
-	regex.compile("([a-z])([A-Z])")
-	return regex.sub(input, "$1_$2", true).to_lower()
+	regex.compile("Loaded \\d+ mods: (?<mods>\\[.*\\])")
+	
+	if !_file.file_exists(log_file_path):
+		push_error("Log file does not exist")
+		return []
+	
+	_file.open(log_file_path, File.READ)
+	var logs = _file.get_as_text()
+	var loaded_mod_logs = JSON.parse(regex.search(logs).get_string("mods"))
+	_file.close()
+
+	if loaded_mod_logs.error != OK:
+		push_error("Could not parse loaded mods from log file")
+		return []
+	
+	return loaded_mod_logs.result
 
 
 func _add_mod_menu(node: Node) -> void:
@@ -184,3 +197,21 @@ func _add_mod_menu(node: Node) -> void:
 		else:
 			menu_list.margin_top -= 24
 			menu_list.margin_bottom += 24
+
+
+func _snakeify_keys(input: Dictionary) -> Dictionary:
+	var new_dictionary := {}
+
+	for key in input:
+		if input[key] is Dictionary:
+			new_dictionary[_to_snake_case(key)] = _snakeify_keys(input[key])
+		else:
+			new_dictionary[_to_snake_case(key)] = input[key]
+	
+	return new_dictionary
+
+
+func _to_snake_case(input: String) -> String:
+	var regex = RegEx.new()
+	regex.compile("([a-z])([A-Z])")
+	return regex.sub(input, "$1_$2", true).to_lower()

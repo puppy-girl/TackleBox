@@ -3,19 +3,23 @@ extends Node
 const MOD_PANEL = preload("res://mods/TackleBox/Scenes/ModMenu/mod_panel.tscn")
 const MOD_CONFIG = preload("res://mods/TackleBox/Scenes/ModMenu/mod_config.tscn")
 
-var _loaded_mods := [ "TackleBox", "Sulayre.Lure" ] # Put your mod ID here when testing
-
 onready var main_menu := get_parent()
 onready var TackleBox := $"/root/TackleBox"
 
 
 func _ready() -> void:
-	if "loaded_mods" in Globals:
-		_loaded_mods = Globals.loaded_mods
+	var mod_list := $"Panel/Panel2/ScrollContainer/VBoxContainer"
 	
-	var mod_list = $"Panel/Panel2/ScrollContainer/VBoxContainer"
+	var loaded_mods: Array
+	var invalid_mods: Array
 	
-	for mod_id in _loaded_mods:
+	for mod_id in TackleBox._mod_manifests:
+		if TackleBox.loaded_mods.has(mod_id):
+			loaded_mods.push_back(mod_id)
+		else:
+			invalid_mods.push_back(mod_id)
+	
+	for mod_id in loaded_mods:
 		var mod_panel := MOD_PANEL.instance()
 		
 		var mod_data: Dictionary = TackleBox.get_mod_metadata(mod_id)
@@ -41,6 +45,26 @@ func _ready() -> void:
 			
 			mod_icon.texture = load(mod_icon_path)
 			mod_icon.visible = true
+		
+		mod_list.add_child(mod_panel)
+	
+	if invalid_mods.size() == 0:
+		return
+	
+	var separator := TextureRect.new()
+	separator.texture = load("res://Assets/Textures/UI/knot_sep.png")
+	separator.stretch_mode = 4
+	mod_list.add_child(separator)
+	
+	for mod_id in invalid_mods:
+		var mod_panel := MOD_PANEL.instance()
+		
+		var mod_data: Dictionary = TackleBox.get_mod_metadata(mod_id)
+		
+		mod_panel.get_node("HBoxContainer/ModInfo/ModName").bbcode_text = mod_id
+		mod_panel.get_node("HBoxContainer/ModInfo/ModDescription").text = "Mod failed to load"
+		
+		mod_panel.self_modulate = Color(1, 1, 1, 0.75)
 		
 		mod_list.add_child(mod_panel)
 
