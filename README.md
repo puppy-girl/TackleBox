@@ -1,9 +1,11 @@
 # Tackle Box
-A mod list and configuration editor for GDWeave-compatible mods in Webfishing! 🎣
+A mod list and configuration editor for GDWeave mods in WEBFISHING! 🎣
 
-Adds a button to Webfishing's main menu to view a list of the mods currently loaded by GDWeave. Mods with additional config files will have a config menu, allowing you to enable/disable features of a mod without touching a json file. Currently only true or false values are supported for Tackle Box's config editor but this is subject to change!
+Adds a "Mods" button to the main and escape menus to view a list of the mods currently loaded by GDWeave. If a mod fails to load it will be separated and labelled by Tackle Box to aid in discovering problems with installed mods.
 
-![Tackle Box's mod menu](https://github.com/user-attachments/assets/e25feb64-ca22-4edf-ab86-79a4ca6e558d)
+Mods that come with additional config options will show a button to configure them, allowing you to enable/disable features of a mod or change a mod's behaviour without touching a json file!
+
+![A screenshot of Tackle Box's mod menu](https://github.com/user-attachments/assets/1c2ae01c-2ce7-4381-bde9-cd82ed3ec238)
 
 ## Installation
 > [!IMPORTANT]  
@@ -26,6 +28,8 @@ For an example of what your manifest should look like, check out [Tackle Box's m
 Additionally, as of version 0.2.0, Tackle Box comes with additional utilities for developers to take advantage of. To use Tackle Box's utilities in your code, add the following to the top of your script:
 
 `onready var TackleBox := $"/root/TackleBox"`
+
+To make sure Tackle Box is available for your mod to use, include `"TackleBox"` in the dependencies in your mod's `manifest.json`
 
 ### Signals
 
