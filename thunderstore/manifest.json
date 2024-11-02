@@ -1,0 +1,9 @@
+{
+    "name": "TackleBox",
+    "version_number": "0.4.0",
+    "website_url": "https://github.com/puppy-girl/TackleBox/",
+    "description": "View and configure installed mods!",
+    "dependencies": [
+        "NotNet-GDWeave-2.0.12"
+    ]
+}
