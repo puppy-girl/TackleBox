@@ -56,15 +56,34 @@ func _ready() -> void:
 	separator.stretch_mode = 4
 	mod_list.add_child(separator)
 	
+	var regex = RegEx.new()
+	
 	for mod_id in invalid_mods:
 		var mod_panel := MOD_PANEL.instance()
 		
 		var mod_data: Dictionary = TackleBox.get_mod_metadata(mod_id)
 		
+		regex.compile("\\[WRN\\] (?<warning>.*" + mod_id + ".*)")
+		var search: RegExMatch = regex.search(TackleBox.gdweave_logs)
+		var warning: String = search.get_string("warning") if search else "Mod failed to load"
+		
+		var dir = OS.get_executable_path().get_base_dir() + "/"
+		if OS.has_feature("Windows"):
+			dir = dir.replace("/", "\\")
+		warning = warning.replace(dir, "")
+		
 		mod_panel.get_node("HBoxContainer/ModInfo/ModName").bbcode_text = mod_id
-		mod_panel.get_node("HBoxContainer/ModInfo/ModDescription").text = "Mod failed to load"
+		mod_panel.get_node("HBoxContainer/ModInfo/ModDescription").text = warning + "\n"
 		
 		mod_panel.self_modulate = Color(1, 1, 1, 0.75)
+		
+		var copy_logs_button = Button.new()
+		copy_logs_button.text = "Copy Logs to Clipboard"
+		copy_logs_button.rect_min_size = Vector2(360, 40)
+		copy_logs_button.size_flags_horizontal = 2
+		copy_logs_button.margin_top = 20
+		copy_logs_button.connect("pressed", self, "_copy_to_clipboard", [TackleBox.gdweave_logs])
+		mod_panel.get_node("HBoxContainer/ModInfo").add_child(copy_logs_button)
 		
 		mod_list.add_child(mod_panel)
 
@@ -80,3 +99,7 @@ func _open_config(mod_id: String) -> void:
 
 func _on_close_pressed() -> void:
 	main_menu.get_node("mods_menu").visible = false
+
+
+func _copy_to_clipboard(content: String) -> void:
+	OS.clipboard = content

@@ -5,9 +5,10 @@ signal mod_config_updated(mod_id, config)
 const MODS_MENU = preload("res://mods/TackleBox/Scenes/ModMenu/mods_menu.tscn")
 const MODS_BUTTON = preload("res://mods/TackleBox/Scenes/mods_button.tscn")
 
-var gdweave_directory := OS.get_executable_path() + "/../GDWeave/"
-var mods_directory := gdweave_directory + "mods/"
-var configs_directory := gdweave_directory + "configs/"
+var gdweave_directory := OS.get_executable_path().get_base_dir().plus_file("GDWeave")
+var mods_directory := gdweave_directory.plus_file("mods")
+var configs_directory := gdweave_directory.plus_file("configs")
+var gdweave_logs: String
 var loaded_mods: Array
 
 var _file := File.new()
@@ -22,6 +23,7 @@ var _default_loaded_mods := [ "TackleBox" ]
 func _init() -> void:
 	_init_mod_manifests()
 	_init_mod_configs()
+	gdweave_logs = _get_gdweave_logs()
 	loaded_mods = _get_loaded_mods()
 
 
@@ -69,7 +71,7 @@ func set_mod_config(mod_id: String, new_config: Dictionary) -> int:
 	if !new_config is Dictionary:
 		return ERR_INVALID_DATA
 	
-	var config_file_path = configs_directory + mod_id + ".json"
+	var config_file_path = configs_directory.plus_file(mod_id + ".json")
 	
 	var config_file_err := _file.open(config_file_path, File.WRITE)
 	if config_file_err != OK:
@@ -98,7 +100,7 @@ func _init_mod_manifests() -> void:
 			file_name = _dir.get_next()
 			continue
 		
-		var manifest_path := mods_directory + file_name + "/manifest.json"
+		var manifest_path := mods_directory.plus_file(file_name + "/manifest.json")
 		var mod_id: String
 		
 		if _file.file_exists(manifest_path):
@@ -111,7 +113,7 @@ func _init_mod_manifests() -> void:
 			
 			_file.close()
 		
-		var mod_file_path := mods_directory + file_name + "/mod.json"
+		var mod_file_path := mods_directory.plus_file(file_name + "/mod.json")
 		
 		if (_file.file_exists(mod_file_path)):
 			_file.open(mod_file_path, File.READ)
@@ -136,7 +138,7 @@ func _init_mod_configs() -> void:
 	
 	var file_name := _dir.get_next()
 	while file_name != "":
-		var config_path := configs_directory + file_name
+		var config_path := configs_directory.plus_file(file_name)
 		var mod_id := file_name.replace(".json", "")
 		
 		_file.open(config_path, File.READ)
@@ -152,24 +154,31 @@ func _init_mod_configs() -> void:
 	_dir.list_dir_end()
 
 
+func _get_gdweave_logs() -> String:
+	var log_file_path := gdweave_directory.plus_file("GDWeave.log")
+	
+	if !_file.file_exists(log_file_path):
+		push_error("GDWeave log file does not exist")
+		return ""
+	
+	_file.open(log_file_path, File.READ)
+	var logs := _file.get_as_text()
+	_file.close()
+	
+	return logs
+
+
 func _get_loaded_mods() -> Array:
 	if OS.has_feature("editor"):
 		return _default_loaded_mods
 	
-	var log_file_path := gdweave_directory + "GDWeave.log"
 	var mods := []
 
 	var regex = RegEx.new()
 	regex.compile("Loaded \\d+ mods: (?<mods>\\[.*\\])")
 	
-	if !_file.file_exists(log_file_path):
-		push_error("Log file does not exist")
-		return []
-	
-	_file.open(log_file_path, File.READ)
-	var logs = _file.get_as_text()
-	var loaded_mod_logs = JSON.parse(regex.search(logs).get_string("mods"))
-	_file.close()
+	var search: RegExMatch = regex.search(gdweave_logs)
+	var loaded_mod_logs := JSON.parse(search.get_string("mods") if search else "")
 
 	if loaded_mod_logs.error != OK:
 		push_error("Could not parse loaded mods from log file")
