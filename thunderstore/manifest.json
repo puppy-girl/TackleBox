@@ -1,6 +1,6 @@
 {
     "name": "TackleBox",
-    "version_number": "0.4.0",
+    "version_number": "0.4.1",
     "website_url": "https://github.com/puppy-girl/TackleBox/",
     "description": "View and configure installed mods!",
     "dependencies": [
