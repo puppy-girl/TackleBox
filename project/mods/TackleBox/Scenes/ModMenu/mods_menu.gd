@@ -82,7 +82,8 @@ func _ready() -> void:
 		copy_logs_button.rect_min_size = Vector2(360, 40)
 		copy_logs_button.size_flags_horizontal = 2
 		copy_logs_button.margin_top = 20
-		copy_logs_button.connect("pressed", self, "_copy_to_clipboard", [TackleBox.gdweave_logs])
+		copy_logs_button.set_script(load("res://Scenes/Menus/Main Menu/ui_generic_button.gd"))
+		copy_logs_button.connect("pressed", self, "_on_copy_pressed", [TackleBox.gdweave_logs, copy_logs_button])
 		mod_panel.get_node("HBoxContainer/ModInfo").add_child(copy_logs_button)
 		
 		mod_list.add_child(mod_panel)
@@ -101,5 +102,6 @@ func _on_close_pressed() -> void:
 	main_menu.get_node("mods_menu").visible = false
 
 
-func _copy_to_clipboard(content: String) -> void:
+func _on_copy_pressed(content: String, button: Button) -> void:
 	OS.clipboard = content
+	button.set_text("Copied!")
