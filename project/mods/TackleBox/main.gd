@@ -5,7 +5,7 @@ signal mod_config_updated(mod_id, config)
 const MODS_MENU = preload("res://mods/TackleBox/Scenes/ModMenu/mods_menu.tscn")
 const MODS_BUTTON = preload("res://mods/TackleBox/Scenes/mods_button.tscn")
 
-var gdweave_directory := OS.get_executable_path().get_base_dir().plus_file("GDWeave")
+var gdweave_directory := _get_gdweave_dir()
 var mods_directory := gdweave_directory.plus_file("mods")
 var configs_directory := gdweave_directory.plus_file("configs")
 var gdweave_logs: String
@@ -86,6 +86,17 @@ func set_mod_config(mod_id: String, new_config: Dictionary) -> int:
 	
 	return OK
 
+
+func _get_gdweave_dir() -> String:
+	var base_directory := OS.get_executable_path().get_base_dir()
+	var default_directory := base_directory.plus_file("GDWeave")
+	var final_directory: String
+	
+	for argument in OS.get_cmdline_args():
+		if argument.begins_with("--gdweave-folder-override="):
+			final_directory = base_directory.plus_file(argument.split("=")[1])
+	
+	return final_directory if final_directory else default_directory
 
 func _init_mod_manifests() -> void:
 	if _dir.open(mods_directory) != OK:
