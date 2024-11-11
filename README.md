@@ -99,7 +99,7 @@ func _ready() -> void:
 func _init_config() -> void:
     var saved_config = TackleBox.get_mod_config(MOD_ID)
 
-    for key in saved_config.keys():
+    for key in default_config.keys():
         if not saved_config[key]: # If the config property isn't saved...
             saved_config[key] = default_config[key] # Set it to the default
     
