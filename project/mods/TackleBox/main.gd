@@ -88,15 +88,25 @@ func set_mod_config(mod_id: String, new_config: Dictionary) -> int:
 
 
 func _get_gdweave_dir() -> String:
-	var base_directory := OS.get_executable_path().get_base_dir()
-	var default_directory := base_directory.plus_file("GDWeave")
+	var game_directory := OS.get_executable_path().get_base_dir()
+	var default_directory := game_directory.plus_file("GDWeave")
+	var folder_override: String
 	var final_directory: String
 	
 	for argument in OS.get_cmdline_args():
 		if argument.begins_with("--gdweave-folder-override="):
-			final_directory = base_directory.plus_file(argument.split("=")[1])
+			folder_override = argument.trim_prefix("--gdweave-folder-override=").replace("\\", "/")
 	
-	return final_directory if final_directory else default_directory
+	if folder_override:
+		var relative_path := game_directory.plus_file(folder_override)
+		var is_relative := not ":" in relative_path and _file.file_exists(relative_path)
+		
+		final_directory = relative_path if is_relative else folder_override
+	else:
+		final_directory = default_directory
+	
+	return final_directory
+
 
 func _init_mod_manifests() -> void:
 	if _dir.open(mods_directory) != OK:
