@@ -35,7 +35,7 @@ func _ready() -> void:
 # Keys are returned in snake_case
 func get_mod_manifest(mod_id: String) -> Dictionary:
 	if !mod_id in _mod_manifests:
-		push_error("No mod manifest for mod id " + mod_id)
+		push_warning("No mod manifest for mod id " + mod_id)
 		return {}
 	
 	return _mod_manifests[mod_id]
@@ -50,14 +50,14 @@ func get_mod_metadata(mod_id: String) -> Dictionary:
 	if mod_id in _mod_manifests and "metadata" in _mod_manifests[mod_id]:
 		return _mod_manifests[mod_id].metadata
 	
-	push_error("No mod metadata for mod id " + mod_id)
+	push_warning("No mod metadata for mod id " + mod_id)
 	return {}
 
 
 # Returns the config file for the given mod ID
 func get_mod_config(mod_id: String) -> Dictionary:
 	if !mod_id in _mod_configs:
-		push_error("No config data for mod id " + mod_id)
+		push_warning("No config data for mod id " + mod_id)
 		return {}
 	
 	return _mod_configs[mod_id]
@@ -110,7 +110,7 @@ func _get_gdweave_dir() -> String:
 
 func _init_mod_manifests() -> void:
 	if _dir.open(mods_directory) != OK:
-		push_error("Could not open mods directory")
+		push_error("TackleBox could not open mods directory")
 		return
 	
 	_dir.list_dir_begin(true, true)
@@ -152,7 +152,7 @@ func _init_mod_manifests() -> void:
 
 func _init_mod_configs() -> void:
 	if _dir.open(configs_directory) != OK:
-		push_error("Could not open config directory")
+		push_warning("TackleBox could not open configs directory")
 		return
 	
 	_dir.list_dir_begin(true, true)
@@ -179,7 +179,7 @@ func _get_gdweave_logs() -> String:
 	var log_file_path := gdweave_directory.plus_file("GDWeave.log")
 	
 	if !_file.file_exists(log_file_path):
-		push_error("GDWeave log file does not exist")
+		push_error("TackleBox could not get the GDWeave log file: does not exist")
 		return ""
 	
 	_file.open(log_file_path, File.READ)
@@ -202,7 +202,7 @@ func _get_loaded_mods() -> Array:
 	var loaded_mod_logs := JSON.parse(search.get_string("mods") if search else "")
 
 	if loaded_mod_logs.error != OK:
-		push_error("Could not parse loaded mods from log file")
+		push_error("TackleBox could not parse loaded mods from the log file")
 		return []
 	
 	return loaded_mod_logs.result
