@@ -1,17 +1,16 @@
 extends Node
 
-const MOD_PANEL = preload("res://mods/TackleBox/Scenes/ModMenu/mod_panel.tscn")
-const MOD_CONFIG = preload("res://mods/TackleBox/Scenes/ModMenu/mod_config.tscn")
+const ModPanel := preload("res://mods/TackleBox/Scenes/ModMenu/mod_panel.tscn")
+const ModConfig := preload("res://mods/TackleBox/Scenes/ModMenu/mod_config.tscn")
 
-onready var main_menu := get_parent()
 onready var TackleBox := $"/root/TackleBox"
+onready var main_menu := get_parent()
+onready var mod_list := $"Panel/Panel2/ScrollContainer/VBoxContainer"
 
 
 func _ready() -> void:
-	var mod_list := $"Panel/Panel2/ScrollContainer/VBoxContainer"
-	
-	var loaded_mods: Array
-	var invalid_mods: Array
+	var loaded_mods := []
+	var invalid_mods := []
 	
 	for mod_id in TackleBox._mod_manifests:
 		if TackleBox.loaded_mods.has(mod_id):
@@ -20,7 +19,8 @@ func _ready() -> void:
 			invalid_mods.push_back(mod_id)
 	
 	for mod_id in loaded_mods:
-		var mod_panel := MOD_PANEL.instance()
+		var mod_panel := ModPanel.instance()
+		mod_panel.name = mod_id
 		
 		var mod_data: Dictionary = TackleBox.get_mod_metadata(mod_id)
 		
@@ -33,11 +33,6 @@ func _ready() -> void:
 		
 		mod_panel.get_node("HBoxContainer/ModInfo/ModName").bbcode_text = mod_header
 		mod_panel.get_node("HBoxContainer/ModInfo/ModDescription").text = mod_description
-		
-		if TackleBox.get_mod_config(mod_id):
-			var config_button := mod_panel.get_node("HBoxContainer/Button")
-			config_button.visible = true
-			config_button.connect("pressed", self, "_open_config", [mod_id])
 		
 		var mod_icon_path: String = "res://mods/" + mod_id + "/icon.png"
 		if ResourceLoader.exists(mod_icon_path):
@@ -56,10 +51,10 @@ func _ready() -> void:
 	separator.stretch_mode = 4
 	mod_list.add_child(separator)
 	
-	var regex = RegEx.new()
+	var regex := RegEx.new()
 	
 	for mod_id in invalid_mods:
-		var mod_panel := MOD_PANEL.instance()
+		var mod_panel := ModPanel.instance()
 		
 		var mod_data: Dictionary = TackleBox.get_mod_metadata(mod_id)
 		
@@ -67,7 +62,7 @@ func _ready() -> void:
 		var search: RegExMatch = regex.search(TackleBox.gdweave_logs)
 		var warning: String = search.get_string("warning") if search else "Mod failed to load"
 		
-		var dir = OS.get_executable_path().get_base_dir() + "/"
+		var dir := OS.get_executable_path().get_base_dir() + "/"
 		if OS.has_feature("Windows"):
 			dir = dir.replace("/", "\\")
 		warning = warning.replace(dir, "")
@@ -77,7 +72,7 @@ func _ready() -> void:
 		
 		mod_panel.self_modulate = Color(1, 1, 1, 0.75)
 		
-		var copy_logs_button = Button.new()
+		var copy_logs_button := Button.new()
 		copy_logs_button.text = "Copy Logs to Clipboard"
 		copy_logs_button.rect_min_size = Vector2(360, 40)
 		copy_logs_button.size_flags_horizontal = 2
@@ -89,11 +84,19 @@ func _ready() -> void:
 		mod_list.add_child(mod_panel)
 
 
+func _show_config_buttons() -> void:
+	for panel in mod_list.get_children():
+		if panel.name in TackleBox.loaded_mods and TackleBox.get_mod_config(panel.name):
+			var config_button: Button = panel.get_node("HBoxContainer/Button")
+			config_button.visible = true
+			config_button.connect("pressed", self, "_open_config", [panel.name])
+
+
 func _open_config(mod_id: String) -> void:
 	if main_menu.has_node("mod_config"):
 		return
 
-	var mod_config := MOD_CONFIG.instance()
+	var mod_config := ModConfig.instance()
 	main_menu.add_child(mod_config)
 	mod_config.initialise(mod_id)
 

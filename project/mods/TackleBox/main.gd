@@ -2,8 +2,10 @@ extends Node
 
 signal mod_config_updated(mod_id, config)
 
-const MODS_MENU = preload("res://mods/TackleBox/Scenes/ModMenu/mods_menu.tscn")
-const MODS_BUTTON = preload("res://mods/TackleBox/Scenes/mods_button.tscn")
+# When testing in the editor add your mod ID here for it to show up!
+const DEFAULT_MODS := [ "TackleBox" ]
+const ModsMenu := preload("res://mods/TackleBox/Scenes/ModMenu/mods_menu.tscn")
+const ModsButton := preload("res://mods/TackleBox/Scenes/mods_button.tscn")
 
 var gdweave_directory := _get_gdweave_dir()
 var mods_directory := gdweave_directory.plus_file("mods")
@@ -16,8 +18,6 @@ var _dir := Directory.new()
 var _mod_manifests: Dictionary
 var _mod_configs: Dictionary
 var _mod_data: Dictionary
-# Add your mod ID here when testing in the editor
-var _default_loaded_mods := [ "TackleBox" ]
 
 
 func _init() -> void:
@@ -34,7 +34,7 @@ func _ready() -> void:
 # Returns the mod manifest for the given mod ID
 # Keys are returned in snake_case
 func get_mod_manifest(mod_id: String) -> Dictionary:
-	if !mod_id in _mod_manifests:
+	if not mod_id in _mod_manifests:
 		push_warning("No mod manifest for mod id " + mod_id)
 		return {}
 	
@@ -56,7 +56,7 @@ func get_mod_metadata(mod_id: String) -> Dictionary:
 
 # Returns the config file for the given mod ID
 func get_mod_config(mod_id: String) -> Dictionary:
-	if !mod_id in _mod_configs:
+	if not mod_id in _mod_configs:
 		push_warning("No config data for mod id " + mod_id)
 		return {}
 	
@@ -68,7 +68,7 @@ func set_mod_config(mod_id: String, new_config: Dictionary) -> int:
 	if mod_id.find("/") != -1 or mod_id.find("\\") != -1:
 		return ERR_INVALID_PARAMETER
 	
-	if !new_config is Dictionary:
+	if not new_config is Dictionary:
 		return ERR_INVALID_DATA
 	
 	var config_file_path = configs_directory.plus_file(mod_id + ".json")
@@ -117,7 +117,7 @@ func _init_mod_manifests() -> void:
 	
 	var file_name := _dir.get_next()
 	while file_name != "":
-		if !_dir.current_is_dir():
+		if not _dir.current_is_dir():
 			file_name = _dir.get_next()
 			continue
 		
@@ -136,7 +136,7 @@ func _init_mod_manifests() -> void:
 		
 		var mod_file_path := mods_directory.plus_file(file_name + "/mod.json")
 		
-		if (_file.file_exists(mod_file_path)):
+		if _file.file_exists(mod_file_path):
 			_file.open(mod_file_path, File.READ)
 			
 			var mod_file_data := JSON.parse(_file.get_as_text())
@@ -178,7 +178,7 @@ func _init_mod_configs() -> void:
 func _get_gdweave_logs() -> String:
 	var log_file_path := gdweave_directory.plus_file("GDWeave.log")
 	
-	if !_file.file_exists(log_file_path):
+	if not _file.file_exists(log_file_path):
 		push_error("TackleBox could not get the GDWeave log file: does not exist")
 		return ""
 	
@@ -191,7 +191,7 @@ func _get_gdweave_logs() -> String:
 
 func _get_loaded_mods() -> Array:
 	if OS.has_feature("editor"):
-		return _default_loaded_mods
+		return DEFAULT_MODS
 	
 	var mods := []
 
@@ -210,13 +210,13 @@ func _get_loaded_mods() -> Array:
 
 func _add_mod_menu(node: Node) -> void:
 	if node.name == "main_menu" or node.name == "esc_menu":
-		var mod_menu: Node = MODS_MENU.instance()
+		var mod_menu: Node = ModsMenu.instance()
 		mod_menu.visible = false
 		
 		node.add_child(mod_menu)
 		
 		var menu_list: Node = node.get_node("VBoxContainer")
-		var button: Button = MODS_BUTTON.instance()
+		var button: Button = ModsButton.instance()
 		var settings_button: Node = menu_list.get_node("settings")
 		
 		menu_list.add_child(button)

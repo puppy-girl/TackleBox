@@ -1,7 +1,7 @@
-class_name ModsButton
 extends GenericUIButton
 
 
 func _on_mods_pressed() -> void:
-	get_parent().get_parent().get_node("mods_menu").visible = true
-	return
+	var mods_menu = $"../../mods_menu"
+	mods_menu.visible = true
+	mods_menu._show_config_buttons()

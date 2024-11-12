@@ -43,7 +43,7 @@ func initialise(mod_id: String) -> void:
 		
 			line.add_child(option)
 		else:
-			var text_input = LineEdit.new()
+			var text_input := LineEdit.new()
 			text_input.set("size_flags_horizontal", 3)
 			text_input.set("size_flags_stretch_ratio", 0.75)
 			
