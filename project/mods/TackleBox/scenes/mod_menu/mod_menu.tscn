@@ -1,13 +1,15 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Assets/Themes/panel_med.tres" type="StyleBox" id=1]
 [ext_resource path="res://Scenes/Menus/Main Menu/ui_generic_button.gd" type="Script" id=2]
 [ext_resource path="res://mods/TackleBox/scenes/mod_menu/mod_menu.gd" type="Script" id=3]
 [ext_resource path="res://Assets/Textures/UI/knot_sep2.png" type="Texture" id=4]
+[ext_resource path="res://mods/TackleBox/assets/mod_menu.tres" type="Theme" id=5]
 
 [node name="mods_menu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 5 )
 script = ExtResource( 3 )
 
 [node name="background" type="ColorRect" parent="."]
