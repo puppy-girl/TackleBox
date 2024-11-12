@@ -4,8 +4,8 @@ signal mod_config_updated(mod_id, config)
 
 # When testing in the editor add your mod ID here for it to show up!
 const DEFAULT_MODS := [ "TackleBox" ]
-const ModsMenu := preload("res://mods/TackleBox/Scenes/ModMenu/mods_menu.tscn")
-const ModsButton := preload("res://mods/TackleBox/Scenes/mods_button.tscn")
+const ModMenu := preload("res://mods/TackleBox/scenes/mod_menu/mod_menu.tscn")
+const ModsButton := preload("res://mods/TackleBox/scenes/mods_button.tscn")
 
 var gdweave_directory := _get_gdweave_dir()
 var mods_directory := gdweave_directory.plus_file("mods")
@@ -210,7 +210,7 @@ func _get_loaded_mods() -> Array:
 
 func _add_mod_menu(node: Node) -> void:
 	if node.name == "main_menu" or node.name == "esc_menu":
-		var mod_menu: Node = ModsMenu.instance()
+		var mod_menu: Node = ModMenu.instance()
 		mod_menu.visible = false
 		
 		node.add_child(mod_menu)

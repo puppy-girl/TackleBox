@@ -1,0 +1,69 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Menus/Main Menu/ui_generic_button.gd" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 16.0
+content_margin_right = 8.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+bg_color = Color( 1, 0.933333, 0.835294, 1 )
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="PanelContainer" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 8.0
+margin_right = 1912.0
+margin_bottom = 1072.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 18
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+visible = false
+margin_right = 72.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 72, 72 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+expand = true
+
+[node name="ModInfo" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 1896.0
+margin_bottom = 1064.0
+size_flags_horizontal = 3
+custom_constants/separation = 0
+
+[node name="ModName" type="RichTextLabel" parent="HBoxContainer/ModInfo"]
+margin_right = 1896.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 100, 36 )
+size_flags_horizontal = 3
+custom_colors/default_color = Color( 0.415686, 0.266667, 0.12549, 1 )
+bbcode_enabled = true
+
+[node name="ModDescription" type="Label" parent="HBoxContainer/ModInfo"]
+margin_top = 36.0
+margin_right = 1896.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 100, 36 )
+custom_colors/font_color = Color( 0.592157, 0.380392, 0.168627, 1 )
+autowrap = true
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+visible = false
+margin_left = 118.0
+margin_right = 334.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 216, 72 )
+size_flags_vertical = 0
+text = "Configure"
+script = ExtResource( 1 )
