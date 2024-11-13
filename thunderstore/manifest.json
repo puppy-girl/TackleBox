@@ -1,6 +1,6 @@
 {
     "name": "TackleBox",
-    "version_number": "0.4.3",
+    "version_number": "0.5.0",
     "website_url": "https://github.com/puppy-girl/TackleBox/",
     "description": "A mod menu for WEBFISHING and config API for mod devs!",
     "dependencies": [
