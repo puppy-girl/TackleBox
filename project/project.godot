@@ -8,16 +8,6 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "Reference",
-"class": "ModsButton",
-"language": "GDScript",
-"path": "res://mods/TackleBox/Scenes/mods_button.gd"
-} ]
-_global_script_class_icons={
-"ModsButton": ""
-}
-
 [application]
 
 config/name="TackleBox"
