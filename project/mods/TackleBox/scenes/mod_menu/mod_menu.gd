@@ -21,7 +21,7 @@ func _ready() -> void:
 	for mod_id in loaded_mods:
 		var mod_panel := ModPanel.instance()
 		mod_panel.name = mod_id
-		
+		mod_panel.set_meta("modid", mod_id)
 		var mod_data: Dictionary = TackleBox.get_mod_metadata(mod_id)
 		
 		var mod_name: String = mod_data.name if mod_data and mod_data.name else mod_id
@@ -86,10 +86,10 @@ func _ready() -> void:
 
 func _show_config_buttons() -> void:
 	for panel in mod_list.get_children():
-		if panel.name in TackleBox.loaded_mods and TackleBox.get_mod_config(panel.name):
+		if panel.get_meta("modid") in TackleBox.loaded_mods and TackleBox.get_mod_config(panel.get_meta("modid")):
 			var config_button: Button = panel.get_node("HBoxContainer/Button")
 			config_button.visible = true
-			config_button.connect("pressed", self, "_open_config", [panel.name])
+			config_button.connect("pressed", self, "_open_config", [panel.get_meta("modid")])
 
 
 func _open_config(mod_id: String) -> void:
