@@ -156,7 +156,7 @@ func _init_mod_manifests() -> void:
 func _init_mod_configs() -> void:
 	if not _dir.dir_exists(configs_directory):
 		_dir.make_dir(configs_directory)
-	
+
 	if _dir.open(configs_directory) != OK:
 		push_warning("TackleBox could not open configs directory")
 		return

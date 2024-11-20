@@ -21,10 +21,12 @@ func _ready() -> void:
 	for mod_id in loaded_mods:
 		var mod_panel := ModPanel.instance()
 		mod_panel.name = mod_id
-		mod_panel.set_meta("modid", mod_id)
+		mod_panel.set_meta("mod_id", mod_id)
 		var mod_data: Dictionary = TackleBox.get_mod_metadata(mod_id)
 
 		var mod_name: String = mod_data.name if mod_data and mod_data.name else mod_id
+		if "homepage" in mod_data:
+			mod_name = "[url=%s]%s[/url]" % [mod_data.homepage, mod_name]
 		var mod_description: String = (
 			mod_data.description
 			if mod_data and mod_data.description
@@ -33,10 +35,13 @@ func _ready() -> void:
 		var mod_version: String = "v" + mod_data.version if mod_data and mod_data.version else ""
 		var mod_author: String = " by " + mod_data.author if mod_data and mod_data.author else ""
 
-		var mod_header := mod_name + " [color=#587758] " + mod_version + mod_author
+		var mod_header := mod_name + "[color=#587758] " + mod_version + mod_author
 
-		mod_panel.get_node("HBoxContainer/ModInfo/ModName").bbcode_text = mod_header
-		mod_panel.get_node("HBoxContainer/ModInfo/ModDescription").text = mod_description
+		var mod_panel_header := mod_panel.get_node("HBoxContainer/ModInfo/ModName")
+		var mod_panel_description := mod_panel.get_node("HBoxContainer/ModInfo/ModDescription")
+		mod_panel_header.bbcode_text = mod_header
+		mod_panel_header.connect("meta_clicked", self, "_on_url_pressed")
+		mod_panel_description.text = mod_description
 
 		var mod_icon_path: String = "res://mods/" + mod_id + "/icon.png"
 		if ResourceLoader.exists(mod_icon_path):
@@ -93,12 +98,12 @@ func _ready() -> void:
 func show_config_buttons() -> void:
 	for panel in mod_list.get_children():
 		if (
-			panel.get_meta("modid") in TackleBox.loaded_mods
-			and TackleBox.get_mod_config(panel.get_meta("modid"))
+			panel.get_meta("mod_id") in TackleBox.loaded_mods
+			and TackleBox.get_mod_config(panel.get_meta("mod_id"))
 		):
 			var config_button: Button = panel.get_node("HBoxContainer/Button")
 			config_button.visible = true
-			config_button.connect("pressed", self, "_open_config", [panel.get_meta("modid")])
+			config_button.connect("pressed", self, "_open_config", [panel.get_meta("mod_id")])
 
 
 func _open_config(mod_id: String) -> void:
@@ -112,6 +117,11 @@ func _open_config(mod_id: String) -> void:
 
 func _on_close_pressed() -> void:
 	main_menu.get_node("mods_menu").visible = false
+
+
+func _on_url_pressed(meta) -> void:
+	if OS.shell_open(str(meta)) != OK:
+		push_warning("Can't open homepage url " + str(meta))
 
 
 func _on_copy_pressed(content: String, button: Button) -> void:
