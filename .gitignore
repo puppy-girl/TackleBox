@@ -6,4 +6,5 @@
 bin/
 obj/
 
-thunderstore/GDWeave
+manifestation/
+manifestation.exe

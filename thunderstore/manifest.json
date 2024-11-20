@@ -1,9 +1,0 @@
-{
-    "name": "TackleBox",
-    "version_number": "0.5.1",
-    "website_url": "https://github.com/puppy-girl/TackleBox/",
-    "description": "A mod menu for WEBFISHING and config API for mod devs!",
-    "dependencies": [
-        "NotNet-GDWeave-2.0.12"
-    ]
-}

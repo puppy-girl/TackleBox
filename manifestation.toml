@@ -1,0 +1,17 @@
+id = "TackleBox"
+name = "TackleBox"
+description = "A mod menu for WEBFISHING and config API for mod devs!"
+version = "0.5.2"
+homepage = "https://github.com/puppy-girl/TackleBox"
+author = "Jade and Contributors"
+
+icon = "icon.png"
+readme = "thunderstore.md"
+
+# both are optional here, pick what you want
+[project]
+csharp = "./TackleBox/TackleBox.csproj"
+godot = "./project/project.godot"
+
+[[dependencies]]
+thunderstore_version = "NotNet-GDWeave-2.0.14"
