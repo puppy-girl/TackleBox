@@ -109,6 +109,9 @@ func _get_gdweave_dir() -> String:
 
 
 func _init_mod_manifests() -> void:
+	if not _dir.dir_exists(mods_directory):
+		_dir.make_dir(mods_directory)
+
 	if _dir.open(mods_directory) != OK:
 		push_error("TackleBox could not open mods directory")
 		return
@@ -151,6 +154,9 @@ func _init_mod_manifests() -> void:
 
 
 func _init_mod_configs() -> void:
+	if not _dir.dir_exists(configs_directory):
+		_dir.make_dir(configs_directory)
+	
 	if _dir.open(configs_directory) != OK:
 		push_warning("TackleBox could not open configs directory")
 		return
